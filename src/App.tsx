@@ -39,40 +39,42 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
+      <WardrobeProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
 
-          {/* Strategist Portal */}
-          <Route path="/estrategista" element={<StrategistLayout />}>
-            <Route index element={<StrategistDashboard />} />
-            <Route path="clientes" element={<ClientsPage />} />
-            <Route path="clientes/:id" element={<ClientProfile />} />
-            <Route path="diagnostico" element={<DiagnosticPage />} />
-            <Route path="perfis-estilo" element={<StyleProfiles />} />
-            <Route path="paletas" element={<PalettesPage />} />
-            <Route path="guarda-roupa" element={<WardrobePage />} />
-            <Route path="looks" element={<LooksGallery />} />
-            <Route path="assistente" element={<StyleAssistant />} />
-          </Route>
+            {/* Strategist Portal */}
+            <Route path="/estrategista" element={<StrategistLayout />}>
+              <Route index element={<StrategistDashboard />} />
+              <Route path="clientes" element={<ClientsPage />} />
+              <Route path="clientes/:id" element={<ClientProfile />} />
+              <Route path="diagnostico" element={<DiagnosticPage />} />
+              <Route path="perfis-estilo" element={<StyleProfiles />} />
+              <Route path="paletas" element={<PalettesPage />} />
+              <Route path="guarda-roupa" element={<WardrobePage />} />
+              <Route path="looks" element={<LooksGallery />} />
+              <Route path="assistente" element={<StyleAssistant />} />
+            </Route>
 
-          {/* Client Portal */}
-          <Route path="/cliente" element={<ClientLayout />}>
-            <Route index element={<ClientDashboard />} />
-            <Route path="diagnostico" element={<ClientDiagnostic />} />
-            <Route path="perfil-estilo" element={<ClientStyleProfile />} />
-            <Route path="paleta" element={<ClientPalette />} />
-            <Route path="guarda-roupa" element={<ClientWardrobe />} />
-            <Route path="looks" element={<ClientLooks />} />
-            <Route path="inspiracoes" element={<ClientInspirations />} />
-            <Route path="assistente" element={<ClientAssistant />} />
-          </Route>
+            {/* Client Portal */}
+            <Route path="/cliente" element={<ClientLayout />}>
+              <Route index element={<ClientDashboard />} />
+              <Route path="diagnostico" element={<ClientDiagnostic />} />
+              <Route path="perfil-estilo" element={<ClientStyleProfile />} />
+              <Route path="paleta" element={<ClientPalette />} />
+              <Route path="guarda-roupa" element={<ClientWardrobe />} />
+              <Route path="looks" element={<ClientLooks />} />
+              <Route path="inspiracoes" element={<ClientInspirations />} />
+              <Route path="assistente" element={<ClientAssistant />} />
+            </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </WardrobeProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
