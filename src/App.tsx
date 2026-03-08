@@ -33,6 +33,7 @@ import ClientWardrobe from "./pages/cliente/Wardrobe";
 import ClientLooks from "./pages/cliente/Looks";
 import ClientInspirations from "./pages/cliente/Inspirations";
 import ClientAssistant from "./pages/cliente/Assistant";
+import WeeklyPlanner from "./pages/cliente/WeeklyPlanner";
 
 const queryClient = new QueryClient();
 
