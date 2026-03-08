@@ -5,27 +5,25 @@ import { useWardrobeContext } from "@/contexts/WardrobeContext";
 import { OCASIOES } from "@/types/wardrobe";
 import type { Look } from "@/types/wardrobe";
 import LookForm from "@/components/LookForm";
+import SmartLookGenerator from "@/components/SmartLookGenerator";
 import EmptyState from "@/components/EmptyState";
 
 const FILTROS_OCASIAO = ["Todos", ...OCASIOES] as const;
 
 export default function ClientLooks() {
-  const { looks, pecas, addLook, updateLook, deleteLook, getPecaById } = useWardrobeContext();
+  const { looks, pecas, addLook, updateLook, deleteLook, getPecaById, generateSmartLook } = useWardrobeContext();
   const [activeFilter, setActiveFilter] = useState("Todos");
   const [showForm, setShowForm] = useState(false);
+  const [showSmartGen, setShowSmartGen] = useState(false);
   const [editingLook, setEditingLook] = useState<Look | undefined>();
 
   const looksEstrategista = looks.filter((l) => l.criadoPor === "estrategista");
   const looksCliente = looks.filter((l) => l.criadoPor === "cliente");
-
   const applyFilter = (list: Look[]) => activeFilter === "Todos" ? list : list.filter((l) => l.ocasiao === activeFilter);
 
   const handleSave = (data: Omit<Look, "id">) => {
-    if (editingLook) {
-      updateLook(editingLook.id, data);
-    } else {
-      addLook(data);
-    }
+    if (editingLook) updateLook(editingLook.id, data);
+    else addLook(data);
     setEditingLook(undefined);
   };
 
@@ -58,9 +56,7 @@ export default function ClientLooks() {
         <div className="flex flex-wrap gap-1 mb-3">
           {look.pecas.map((pid) => {
             const peca = getPecaById(pid);
-            return peca ? (
-              <span key={pid} className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">{peca.nome}</span>
-            ) : null;
+            return peca ? <span key={pid} className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground">{peca.nome}</span> : null;
           })}
         </div>
         <p className="text-xs text-muted-foreground mb-2">{look.observacao}</p>
@@ -78,9 +74,14 @@ export default function ClientLooks() {
           <h1 className="text-4xl font-display font-light mb-1">Meus Looks</h1>
           <p className="text-muted-foreground text-sm">Looks montados especialmente para você</p>
         </div>
-        <button onClick={() => { setEditingLook(undefined); setShowForm(true); }} className="flex items-center gap-2 px-5 py-2.5 rounded-lg gold-gradient text-primary-foreground text-sm">
-          <Plus className="w-4 h-4" /> Criar Look
-        </button>
+        <div className="flex gap-2">
+          <button onClick={() => setShowSmartGen(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border hover:border-gold/40 text-sm transition-colors">
+            <Sparkles className="w-4 h-4" /> Gerar Look Inteligente
+          </button>
+          <button onClick={() => { setEditingLook(undefined); setShowForm(true); }} className="flex items-center gap-2 px-5 py-2.5 rounded-lg gold-gradient text-primary-foreground text-sm">
+            <Plus className="w-4 h-4" /> Criar Look
+          </button>
+        </div>
       </motion.div>
 
       <div className="flex gap-2 mb-10 overflow-x-auto pb-2">
@@ -92,7 +93,6 @@ export default function ClientLooks() {
         ))}
       </div>
 
-      {/* Looks recomendados pela estrategista */}
       <section className="mb-12">
         <h2 className="font-display text-2xl font-light mb-6 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-gold" /> Looks recomendados pela estrategista
@@ -100,33 +100,21 @@ export default function ClientLooks() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {applyFilter(looksEstrategista).length === 0 ? (
             <EmptyState title="Nenhum look recomendado ainda." subtitle="Sua estrategista ainda não criou looks para você." icon={<Sparkles className="w-7 h-7 text-muted-foreground/40" />} />
-          ) : (
-            applyFilter(looksEstrategista).map((look, i) => renderLookCard(look, i, false))
-          )}
+          ) : applyFilter(looksEstrategista).map((look, i) => renderLookCard(look, i, false))}
         </div>
       </section>
 
-      {/* Looks criados por mim */}
       <section>
         <h2 className="font-display text-2xl font-light mb-6">Looks criados por mim</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {applyFilter(looksCliente).length === 0 ? (
             <EmptyState title="Nenhum look criado ainda." subtitle="Crie seu primeiro look." icon={<Sparkles className="w-7 h-7 text-muted-foreground/40" />} />
-          ) : (
-            applyFilter(looksCliente).map((look, i) => renderLookCard(look, i, true))
-          )}
+          ) : applyFilter(looksCliente).map((look, i) => renderLookCard(look, i, true))}
         </div>
       </section>
 
-      {showForm && (
-        <LookForm
-          onSave={handleSave}
-          onClose={() => { setShowForm(false); setEditingLook(undefined); }}
-          pecas={pecas}
-          initial={editingLook}
-          criadoPor="cliente"
-        />
-      )}
+      {showForm && <LookForm onSave={handleSave} onClose={() => { setShowForm(false); setEditingLook(undefined); }} pecas={pecas} initial={editingLook} criadoPor="cliente" />}
+      {showSmartGen && <SmartLookGenerator onSave={handleSave} onClose={() => setShowSmartGen(false)} generateSmartLook={generateSmartLook} criadoPor="cliente" />}
     </div>
   );
 }

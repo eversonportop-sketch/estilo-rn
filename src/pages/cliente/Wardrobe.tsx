@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
-import { Plus, Pencil, Trash2, Filter } from "lucide-react";
+import { Plus, Pencil, Trash2, Filter, Upload, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useWardrobeContext } from "@/contexts/WardrobeContext";
 import { FILTRO_CATEGORIAS, OCASIOES, CORES_COMUNS } from "@/types/wardrobe";
 import type { PecaGuardaRoupa } from "@/types/wardrobe";
 import PecaForm from "@/components/PecaForm";
+import SmartDetectionModal from "@/components/SmartDetectionModal";
 import EmptyState from "@/components/EmptyState";
 
 export default function ClientWardrobe() {
-  const { pecas, addPeca, updatePeca, deletePeca } = useWardrobeContext();
+  const { pecas, addPeca, addMultiplePecas, updatePeca, deletePeca } = useWardrobeContext();
   const [activeCategory, setActiveCategory] = useState("Todas");
   const [activeCor, setActiveCor] = useState("Todas");
   const [activeOcasiao, setActiveOcasiao] = useState("Todas");
@@ -16,6 +17,8 @@ export default function ClientWardrobe() {
   const [showForm, setShowForm] = useState(false);
   const [editingPeca, setEditingPeca] = useState<PecaGuardaRoupa | undefined>();
   const [showFilters, setShowFilters] = useState(false);
+  const [showDetection, setShowDetection] = useState(false);
+  const [showMultiImport, setShowMultiImport] = useState(false);
 
   let filtered = pecas;
   if (activeCategory !== "Todas") filtered = filtered.filter((p) => p.categoria === activeCategory);
@@ -25,19 +28,19 @@ export default function ClientWardrobe() {
   if (activeOrigem === "Cliente") filtered = filtered.filter((p) => p.criadoPor === "cliente");
 
   const handleEdit = (peca: PecaGuardaRoupa) => {
-    // client can only edit their own pieces
     if (peca.criadoPor !== "cliente") return;
     setEditingPeca(peca);
     setShowForm(true);
   };
 
   const handleSave = (data: Omit<PecaGuardaRoupa, "id">) => {
-    if (editingPeca) {
-      updatePeca(editingPeca.id, data);
-    } else {
-      addPeca(data);
-    }
+    if (editingPeca) updatePeca(editingPeca.id, data);
+    else addPeca(data);
     setEditingPeca(undefined);
+  };
+
+  const handleSmartSave = (items: Omit<PecaGuardaRoupa, "id">[]) => {
+    addMultiplePecas(items);
   };
 
   return (
@@ -47,9 +50,17 @@ export default function ClientWardrobe() {
           <h1 className="text-4xl font-display font-light mb-1">Meu Guarda-Roupa</h1>
           <p className="text-muted-foreground text-sm">Suas peças catalogadas</p>
         </div>
-        <button onClick={() => { setEditingPeca(undefined); setShowForm(true); }} className="flex items-center gap-2 px-5 py-2.5 rounded-lg gold-gradient text-primary-foreground text-sm">
-          <Plus className="w-4 h-4" /> Adicionar Peça
-        </button>
+        <div className="flex gap-2">
+          <button onClick={() => setShowMultiImport(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border hover:border-gold/40 text-sm transition-colors">
+            <Upload className="w-4 h-4" /> Importar por Foto
+          </button>
+          <button onClick={() => setShowDetection(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border hover:border-gold/40 text-sm transition-colors">
+            <Sparkles className="w-4 h-4" /> Detecção Inteligente
+          </button>
+          <button onClick={() => { setEditingPeca(undefined); setShowForm(true); }} className="flex items-center gap-2 px-5 py-2.5 rounded-lg gold-gradient text-primary-foreground text-sm">
+            <Plus className="w-4 h-4" /> Adicionar Peça
+          </button>
+        </div>
       </motion.div>
 
       <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
@@ -94,12 +105,16 @@ export default function ClientWardrobe() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.length === 0 ? (
-          <EmptyState title="Nenhuma peça adicionada ainda." subtitle="Adicione uma peça para começar." />
+          <EmptyState title="Nenhuma peça cadastrada ainda." subtitle="Adicione uma peça para começar." />
         ) : (
           filtered.map((peca, i) => (
             <motion.div key={peca.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }} className="card-luxury overflow-hidden group">
               <div className="aspect-square bg-muted flex items-center justify-center relative">
-                <span className="text-4xl opacity-20">👗</span>
+                {peca.foto ? (
+                  <img src={peca.foto} alt={peca.nome} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-4xl opacity-20">👗</span>
+                )}
                 {peca.criadoPor === "cliente" && (
                   <div className="absolute top-3 right-3 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onClick={() => handleEdit(peca)} className="p-2 rounded-lg bg-card/90 border border-border/50 hover:border-gold/40 transition-colors">
@@ -129,12 +144,13 @@ export default function ClientWardrobe() {
       </div>
 
       {showForm && (
-        <PecaForm
-          onSave={handleSave}
-          onClose={() => { setShowForm(false); setEditingPeca(undefined); }}
-          initial={editingPeca}
-          criadoPor="cliente"
-        />
+        <PecaForm onSave={handleSave} onClose={() => { setShowForm(false); setEditingPeca(undefined); }} initial={editingPeca} criadoPor="cliente" />
+      )}
+      {showDetection && (
+        <SmartDetectionModal onSave={handleSmartSave} onClose={() => setShowDetection(false)} criadoPor="cliente" />
+      )}
+      {showMultiImport && (
+        <SmartDetectionModal onSave={handleSmartSave} onClose={() => setShowMultiImport(false)} criadoPor="cliente" multiItem />
       )}
     </div>
   );
