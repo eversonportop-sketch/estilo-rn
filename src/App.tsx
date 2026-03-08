@@ -33,6 +33,7 @@ import ClientWardrobe from "./pages/cliente/Wardrobe";
 import ClientLooks from "./pages/cliente/Looks";
 import ClientInspirations from "./pages/cliente/Inspirations";
 import ClientAssistant from "./pages/cliente/Assistant";
+import WeeklyPlanner from "./pages/cliente/WeeklyPlanner";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const App = () => (
               <Route path="guarda-roupa" element={<ClientWardrobe />} />
               <Route path="looks" element={<ClientLooks />} />
               <Route path="inspiracoes" element={<ClientInspirations />} />
+              <Route path="planejamento" element={<WeeklyPlanner />} />
               <Route path="assistente" element={<ClientAssistant />} />
             </Route>
 

@@ -22,7 +22,20 @@ export interface Look {
   criadoPor: OrigemPeca;
 }
 
+export interface Inspiracao {
+  id: string;
+  imagem?: string;
+  ocasiao: string;
+  notaEstilo: string;
+}
+
+export interface PlanejamentoDia {
+  dia: string;
+  lookId: string | null;
+}
+
 export const CATEGORIAS: Categoria[] = ["Blusas", "Calças", "Vestidos", "Sapatos", "Acessórios", "Terceiras Peças"];
 export const OCASIOES: Ocasiao[] = ["Trabalho", "Reunião", "Casual", "Evento", "Viagem", "Dia a dia"];
 export const FILTRO_CATEGORIAS = ["Todas", ...CATEGORIAS] as const;
 export const CORES_COMUNS = ["Preto", "Branco", "Off-white", "Marinho", "Bordô", "Bege", "Cinza", "Nude", "Azul", "Vermelho", "Verde", "Rosa"];
+export const DIAS_SEMANA = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"] as const;
