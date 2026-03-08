@@ -13,6 +13,7 @@ const menuItems = [
   { title: "Meu Guarda-Roupa", url: "/cliente/guarda-roupa", icon: Shirt },
   { title: "Meus Looks", url: "/cliente/looks", icon: Image },
   { title: "Inspirações", url: "/cliente/inspiracoes", icon: BookOpen },
+  { title: "Planejamento de Looks", url: "/cliente/planejamento", icon: CalendarDays },
   { title: "Assistente de Estilo", url: "/cliente/assistente", icon: Sparkles },
 ];
 
