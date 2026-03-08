@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { 
   Home, Stethoscope, User, Palette, Shirt, 
-  Image, Sparkles, BookOpen, LogOut
+  Image, Sparkles, BookOpen, CalendarDays, LogOut
 } from "lucide-react";
 import rnLogo from "@/assets/rn-logo.png";
 
