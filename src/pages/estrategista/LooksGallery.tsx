@@ -29,7 +29,7 @@ export default function LooksGallery() {
     <div className="p-8 lg:p-12 max-w-6xl">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-start mb-10">
         <div>
-          <h1 className="text-4xl font-display font-light mb-1">Galeria de Looks</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-light mb-1">Composições Estratégicas de Looks</h1>
           <p className="text-muted-foreground text-sm">Looks montados para suas clientes</p>
         </div>
         <div className="flex gap-2">
