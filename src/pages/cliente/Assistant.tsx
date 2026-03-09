@@ -53,7 +53,7 @@ function generateResponse(input: string, context: { pecasNames: string[]; looksN
 export default function ClientAssistant() {
   const { pecas, looks } = useWardrobeContext();
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Olá! Sou sua **Assistente de Estilo**.\n\nPosso ajudar com combinações de looks, sugestões de cores e recomendações personalizadas com base no seu perfil.\n\nO que gostaria de saber?" },
+    { role: "assistant", content: "Olá! Sou sua **Assistente de Looks**.\n\nPosso ajudar com combinações de looks, sugestões de cores e recomendações personalizadas com base no seu perfil.\n\nO que gostaria de saber?" },
   ]);
   const [input, setInput] = useState("");
 
