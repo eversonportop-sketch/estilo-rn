@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { 
-  Home, FileText, User, Palette, Shirt, 
-  Image, Sparkles, CalendarDays, LogOut, Menu, X,
+  Home, FileText, User, Palette, 
+  Image, Sparkles, LogOut, Menu, X,
   ClipboardList, Scan, Shapes, Camera
 } from "lucide-react";
 import { useState } from "react";
@@ -10,14 +10,13 @@ import rnLogo from "@/assets/rn-logo.png";
 const menuItems = [
   { title: "Início", url: "/cliente", icon: Home },
   { title: "Minha Anamnese", url: "/cliente/anamnese", icon: ClipboardList },
-  { title: "Minha Análise Estratégica", url: "/cliente/analise", icon: FileText },
+  { title: "Minha Análise Estratégica de Imagem", url: "/cliente/analise", icon: FileText },
   { title: "Minha Identidade de Estilo", url: "/cliente/identidade-estilo", icon: User },
   { title: "Minha Coloração Pessoal", url: "/cliente/coloracao", icon: Palette },
   { title: "Minha Morfologia", url: "/cliente/morfologia", icon: Scan },
   { title: "Meus Elementos de Design", url: "/cliente/elementos", icon: Shapes },
   { title: "Meus Looks", url: "/cliente/looks", icon: Image },
   { title: "Minhas Fotos", url: "/cliente/fotos", icon: Camera },
-  { title: "Planejamento de Looks", url: "/cliente/planejamento", icon: CalendarDays },
   { title: "Assistente de Looks", url: "/cliente/assistente", icon: Sparkles },
 ];
 
@@ -28,11 +27,11 @@ export default function ClientSidebar() {
   const SidebarContent = () => (
     <>
       <div className="p-4 md:p-6 flex flex-col items-center border-b border-sidebar-border">
-        <img src={rnLogo} alt="RN Style" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2" />
-        <span className="text-xs md:text-sm font-display tracking-[0.2em] md:tracking-[0.3em] text-sidebar-primary">
-          RN STYLE
+        <img src={rnLogo} alt="RN" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2" />
+        <span className="text-lg md:text-xl font-display tracking-[0.2em] md:tracking-[0.3em] text-sidebar-primary">
+          RN
         </span>
-        <span className="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] text-sidebar-foreground/60 uppercase mt-0.5 text-center leading-tight">
+        <span className="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.15em] text-sidebar-foreground/60 uppercase mt-1 text-center leading-tight">
           Consultoria & Posicionamento<br />Estratégico de Imagem
         </span>
       </div>
@@ -77,8 +76,8 @@ export default function ClientSidebar() {
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-sidebar border-b border-sidebar-border flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-2">
-          <img src={rnLogo} alt="RN Style" className="w-8 h-8 object-contain" />
-          <span className="text-xs font-display tracking-[0.15em] text-sidebar-primary">RN STYLE</span>
+          <img src={rnLogo} alt="RN" className="w-8 h-8 object-contain" />
+          <span className="text-sm font-display tracking-[0.15em] text-sidebar-primary">RN</span>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}

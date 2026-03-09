@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { 
-  LayoutDashboard, Users, Stethoscope, Palette, Shirt, 
-  Image, Sparkles, Settings, LogOut, Menu, X, Camera
+  LayoutDashboard, Users, FileText, User, Palette, 
+  Image, Sparkles, Settings, LogOut, Menu, X, Camera, Scan, Shapes
 } from "lucide-react";
 import { useState } from "react";
 import rnLogo from "@/assets/rn-logo.png";
@@ -9,10 +9,12 @@ import rnLogo from "@/assets/rn-logo.png";
 const menuItems = [
   { title: "Painel", url: "/estrategista", icon: LayoutDashboard },
   { title: "Clientes", url: "/estrategista/clientes", icon: Users },
-  { title: "Diagnóstico", url: "/estrategista/diagnostico", icon: Stethoscope },
-  { title: "Paletas de Cores", url: "/estrategista/paletas", icon: Palette },
-  { title: "Guarda-Roupa", url: "/estrategista/guarda-roupa", icon: Shirt },
-  { title: "Galeria de Looks", url: "/estrategista/looks", icon: Image },
+  { title: "Análise Estratégica de Imagem", url: "/estrategista/analise", icon: FileText },
+  { title: "Identidade de Estilo", url: "/estrategista/identidade-estilo", icon: User },
+  { title: "Coloração Pessoal", url: "/estrategista/coloracao", icon: Palette },
+  { title: "Morfologia", url: "/estrategista/morfologia", icon: Scan },
+  { title: "Elementos de Design", url: "/estrategista/elementos", icon: Shapes },
+  { title: "Composições Estratégicas de Looks", url: "/estrategista/looks", icon: Image },
   { title: "Fotos e Referências", url: "/estrategista/fotos", icon: Camera },
   { title: "Assistente de Looks", url: "/estrategista/assistente", icon: Sparkles },
   { title: "Estrutura da Consultoria", url: "/estrategista/estrutura", icon: Settings },
@@ -25,11 +27,11 @@ export default function StrategistSidebar() {
   const SidebarContent = () => (
     <>
       <div className="p-4 md:p-6 flex flex-col items-center border-b border-sidebar-border">
-        <img src={rnLogo} alt="RN Style" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2" />
-        <span className="text-xs md:text-sm font-display tracking-[0.2em] md:tracking-[0.3em] text-sidebar-primary">
-          RN STYLE
+        <img src={rnLogo} alt="RN" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2" />
+        <span className="text-lg md:text-xl font-display tracking-[0.2em] md:tracking-[0.3em] text-sidebar-primary">
+          RN
         </span>
-        <span className="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] text-sidebar-foreground/60 uppercase mt-0.5 text-center leading-tight">
+        <span className="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.15em] text-sidebar-foreground/60 uppercase mt-1 text-center leading-tight">
           Consultoria & Posicionamento<br />Estratégico de Imagem
         </span>
       </div>
@@ -74,8 +76,8 @@ export default function StrategistSidebar() {
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-sidebar border-b border-sidebar-border flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-2">
-          <img src={rnLogo} alt="RN Style" className="w-8 h-8 object-contain" />
-          <span className="text-xs font-display tracking-[0.15em] text-sidebar-primary">RN STYLE</span>
+          <img src={rnLogo} alt="RN" className="w-8 h-8 object-contain" />
+          <span className="text-sm font-display tracking-[0.15em] text-sidebar-primary">RN</span>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}

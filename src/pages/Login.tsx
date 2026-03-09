@@ -18,9 +18,9 @@ export default function LoginPage() {
         className="w-full max-w-md"
       >
         <div className="text-center mb-8 md:mb-10">
-          <img src={rnLogo} alt="RN Style" className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 object-contain" />
-          <h1 className="text-2xl md:text-3xl font-display tracking-[0.1em] md:tracking-[0.15em] text-primary-foreground">RN STYLE</h1>
-          <p className="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.2em] text-primary-foreground/50 uppercase mt-1 leading-tight">
+          <img src={rnLogo} alt="RN" className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 object-contain" />
+          <h1 className="text-3xl md:text-4xl font-display tracking-[0.1em] md:tracking-[0.15em] text-primary-foreground">RN</h1>
+          <p className="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.2em] text-primary-foreground/50 uppercase mt-2 leading-tight">
             Consultoria & Posicionamento<br />Estratégico de Imagem
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-[10px] text-primary-foreground/30 mt-6 md:mt-8 tracking-wider">
-          © 2026 RN Style — Todos os direitos reservados
+          © 2026 RN — Todos os direitos reservados
         </p>
       </motion.div>
     </div>
