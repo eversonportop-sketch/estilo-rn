@@ -23,6 +23,8 @@ import PalettesPage from "./pages/estrategista/Palettes";
 import WardrobePage from "./pages/estrategista/Wardrobe";
 import LooksGallery from "./pages/estrategista/LooksGallery";
 import StyleAssistant from "./pages/estrategista/StyleAssistant";
+import ConsultingStructure from "./pages/estrategista/ConsultingStructure";
+import StrategistPhotos from "./pages/estrategista/Photos";
 
 // Client pages
 import ClientDashboard from "./pages/cliente/Dashboard";
@@ -34,6 +36,13 @@ import ClientLooks from "./pages/cliente/Looks";
 import ClientInspirations from "./pages/cliente/Inspirations";
 import ClientAssistant from "./pages/cliente/Assistant";
 import WeeklyPlanner from "./pages/cliente/WeeklyPlanner";
+import ClientAnamnese from "./pages/cliente/Anamnese";
+import ClientStrategicAnalysis from "./pages/cliente/StrategicAnalysis";
+import ClientStyleIdentity from "./pages/cliente/StyleIdentity";
+import ClientPersonalColoring from "./pages/cliente/PersonalColoring";
+import ClientMorphology from "./pages/cliente/Morphology";
+import ClientDesignElements from "./pages/cliente/DesignElements";
+import ClientPhotos from "./pages/cliente/Photos";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +67,8 @@ const App = () => (
               <Route path="guarda-roupa" element={<WardrobePage />} />
               <Route path="looks" element={<LooksGallery />} />
               <Route path="assistente" element={<StyleAssistant />} />
+              <Route path="estrutura" element={<ConsultingStructure />} />
+              <Route path="fotos" element={<StrategistPhotos />} />
             </Route>
 
             {/* Client Portal */}
@@ -71,6 +82,13 @@ const App = () => (
               <Route path="inspiracoes" element={<ClientInspirations />} />
               <Route path="planejamento" element={<WeeklyPlanner />} />
               <Route path="assistente" element={<ClientAssistant />} />
+              <Route path="anamnese" element={<ClientAnamnese />} />
+              <Route path="analise" element={<ClientStrategicAnalysis />} />
+              <Route path="identidade-estilo" element={<ClientStyleIdentity />} />
+              <Route path="coloracao" element={<ClientPersonalColoring />} />
+              <Route path="morfologia" element={<ClientMorphology />} />
+              <Route path="elementos" element={<ClientDesignElements />} />
+              <Route path="fotos" element={<ClientPhotos />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
