@@ -72,8 +72,8 @@ export default function ClientAssistant() {
     <div className="flex flex-col h-screen">
       <div className="p-8 pb-0">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-4xl font-display font-light mb-1">Assistente de Estilo</h1>
-          <p className="text-muted-foreground text-sm mb-6">Sua consultora virtual de imagem</p>
+          <h1 className="text-2xl md:text-4xl font-display font-light mb-1">Assistente de Looks</h1>
+          <p className="text-muted-foreground text-xs md:text-sm mb-4 md:mb-6">Sua consultora virtual de imagem</p>
         </motion.div>
       </div>
 
