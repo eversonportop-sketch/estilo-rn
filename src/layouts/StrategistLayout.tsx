@@ -5,7 +5,7 @@ export default function StrategistLayout() {
   return (
     <div className="flex min-h-screen w-full">
       <StrategistSidebar />
-      <main className="flex-1 overflow-auto md:pb-0 pb-4">
+      <main className="flex-1 overflow-auto md:pb-0 pb-4 pt-16 md:pt-0">
         <Outlet />
       </main>
     </div>

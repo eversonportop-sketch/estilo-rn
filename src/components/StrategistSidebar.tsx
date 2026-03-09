@@ -107,8 +107,6 @@ export default function StrategistSidebar() {
         <SidebarContent />
       </aside>
 
-      {/* Mobile spacer */}
-      <div className="md:hidden h-14" />
     </>
   );
 }
