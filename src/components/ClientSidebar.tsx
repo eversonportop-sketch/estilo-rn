@@ -28,8 +28,8 @@ export default function ClientSidebar() {
     <>
       <div className="p-4 md:p-6 flex flex-col items-center border-b border-sidebar-border">
         <img src={rnLogo} alt="RN" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2" />
-        <span className="text-lg md:text-xl font-display tracking-[0.2em] md:tracking-[0.3em] text-sidebar-primary">
-          RN
+        <span className="text-xs md:text-sm font-display tracking-[0.2em] md:tracking-[0.3em] text-sidebar-primary uppercase">
+          Consulting
         </span>
         <span className="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.15em] text-sidebar-foreground/60 uppercase mt-1 text-center leading-tight">
           Consultoria & Posicionamento<br />Estratégico de Imagem
