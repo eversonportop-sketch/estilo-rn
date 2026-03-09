@@ -19,7 +19,7 @@ export default function LoginPage() {
       >
         <div className="text-center mb-8 md:mb-10">
           <img src={rnLogo} alt="RN" className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 object-contain" />
-          <h1 className="text-3xl md:text-4xl font-display tracking-[0.1em] md:tracking-[0.15em] text-primary-foreground">RN</h1>
+          <h1 className="text-sm md:text-base font-display tracking-[0.15em] md:tracking-[0.2em] text-primary-foreground">Consulting</h1>
           <p className="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.2em] text-primary-foreground/50 uppercase mt-2 leading-tight">
             Consultoria & Posicionamento<br />Estratégico de Imagem
           </p>
