@@ -66,7 +66,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-[10px] text-primary-foreground/30 mt-6 md:mt-8 tracking-wider">
-          © 2026 RN Style — Todos os direitos reservados
+          © 2026 RN — Todos os direitos reservados
         </p>
       </motion.div>
     </div>
