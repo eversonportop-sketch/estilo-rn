@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 
 const statusFilters = ["Todos", "Ativo", "Concluído"];
 
-const emptyForm = { nome: "", email: "", telefone: "", profissao: "", objetivo: "", status: "ativo" };
+const emptyForm = { name: "", email: "", phone: "", profession: "", objective: "", status: "ativo" };
 
 export default function ClientsPage() {
   const [search, setSearch] = useState("");
@@ -24,7 +24,7 @@ export default function ClientsPage() {
   const deleteClient = useDeleteClient();
 
   const filtered = (clients || []).filter((c) => {
-    const matchSearch = c.nome.toLowerCase().includes(search.toLowerCase()) || (c.email || "").toLowerCase().includes(search.toLowerCase());
+    const matchSearch = (c.name || "").toLowerCase().includes(search.toLowerCase()) || (c.email || "").toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === "Todos" || (c.status || "ativo") === statusFilter.toLowerCase();
     return matchSearch && matchStatus;
   });
@@ -38,18 +38,18 @@ export default function ClientsPage() {
   const openEdit = (client: any) => {
     setEditingId(client.id);
     setForm({
-      nome: client.nome || "",
+      name: client.name || "",
       email: client.email || "",
-      telefone: client.telefone || "",
-      profissao: client.profissao || "",
-      objetivo: client.objetivo || "",
+      phone: client.phone || "",
+      profession: client.profession || "",
+      objective: client.objective || "",
       status: client.status || "ativo",
     });
     setShowModal(true);
   };
 
   const handleSave = () => {
-    if (!form.nome || !form.email) {
+    if (!form.name || !form.email) {
       toast.error("Nome e email são obrigatórios.");
       return;
     }
@@ -119,7 +119,7 @@ export default function ClientsPage() {
             <motion.div key={client.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: i * 0.05 }} className="card-luxury p-6">
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <h3 className="font-display text-lg">{client.nome}</h3>
+                  <h3 className="font-display text-lg">{client.name}</h3>
                   <p className="text-xs text-muted-foreground">{client.email}</p>
                 </div>
                 <span className={`text-xs px-2 py-0.5 rounded-full ${(client.status || "ativo") === "concluído" ? "bg-green-100 text-green-700" : "bg-gold/10 text-gold-dark"}`}>
@@ -127,18 +127,17 @@ export default function ClientsPage() {
                 </span>
               </div>
               <div className="text-sm space-y-1 mb-4">
-                {client.profissao && <p><span className="text-muted-foreground">Profissão:</span> {client.profissao}</p>}
-                {client.estilo_predominante && <p><span className="text-muted-foreground">Estilo:</span> {client.estilo_predominante}</p>}
-                {client.paleta && <p><span className="text-muted-foreground">Paleta:</span> {client.paleta}</p>}
+                {client.profession && <p><span className="text-muted-foreground">Profissão:</span> {client.profession}</p>}
+                {client.objective && <p><span className="text-muted-foreground">Objetivo:</span> {client.objective}</p>}
               </div>
-              {client.progresso != null && (
+              {client.progress != null && (
                 <div className="mb-4">
                   <div className="flex justify-between text-xs mb-1">
                     <span className="text-muted-foreground">Progresso</span>
-                    <span className="text-gold-dark font-medium">{client.progresso}%</span>
+                    <span className="text-gold-dark font-medium">{client.progress}%</span>
                   </div>
                   <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                    <div className="h-full gold-gradient rounded-full" style={{ width: `${client.progresso}%` }} />
+                    <div className="h-full gold-gradient rounded-full" style={{ width: `${client.progress}%` }} />
                   </div>
                 </div>
               )}
@@ -169,7 +168,7 @@ export default function ClientsPage() {
             <div className="space-y-4">
               <div>
                 <Label>Nome *</Label>
-                <Input value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} placeholder="Nome completo" />
+                <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Nome completo" />
               </div>
               <div>
                 <Label>Email *</Label>
@@ -177,15 +176,15 @@ export default function ClientsPage() {
               </div>
               <div>
                 <Label>Telefone</Label>
-                <Input value={form.telefone} onChange={(e) => setForm({ ...form, telefone: e.target.value })} placeholder="(00) 00000-0000" />
+                <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="(00) 00000-0000" />
               </div>
               <div>
                 <Label>Profissão</Label>
-                <Input value={form.profissao} onChange={(e) => setForm({ ...form, profissao: e.target.value })} placeholder="Profissão" />
+                <Input value={form.profession} onChange={(e) => setForm({ ...form, profession: e.target.value })} placeholder="Profissão" />
               </div>
               <div>
                 <Label>Objetivo</Label>
-                <Input value={form.objetivo} onChange={(e) => setForm({ ...form, objetivo: e.target.value })} placeholder="Objetivo da consultoria" />
+                <Input value={form.objective} onChange={(e) => setForm({ ...form, objective: e.target.value })} placeholder="Objetivo da consultoria" />
               </div>
             </div>
             <div className="flex gap-3 mt-6 justify-end">

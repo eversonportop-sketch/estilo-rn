@@ -3,17 +3,15 @@ import { supabase } from '@/integrations/supabase/client';
 
 export interface Client {
   id: string;
-  nome: string;
+  consultant_id?: string;
+  name: string;
+  full_name?: string;
   email: string;
-  telefone?: string;
-  profissao?: string;
-  objetivo?: string;
-  estilo_predominante?: string;
-  estilo_secundario?: string;
-  paleta?: string;
+  phone?: string;
+  profession?: string;
+  objective?: string;
   status?: string;
-  progresso?: number;
-  anotacoes?: string;
+  progress?: number;
   created_at?: string;
 }
 

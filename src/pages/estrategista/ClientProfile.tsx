@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Mail, Phone, Briefcase, Target, Palette, Star, Loader2 } from "lucide-react";
+import { ArrowLeft, Mail, Phone, Briefcase, Target, Loader2 } from "lucide-react";
 import { useClient } from "@/hooks/useClients";
 
 export default function ClientProfile() {
@@ -33,7 +33,7 @@ export default function ClientProfile() {
       </Link>
 
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-4xl font-display font-light mb-1">{client.nome}</h1>
+        <h1 className="text-4xl font-display font-light mb-1">{client.name}</h1>
         <p className="text-muted-foreground text-sm mb-10">Ficha completa da cliente</p>
       </motion.div>
 
@@ -42,17 +42,15 @@ export default function ClientProfile() {
           <h2 className="font-display text-xl mb-4">Informações Pessoais</h2>
           <div className="space-y-3">
             {client.email && <div className="flex items-center gap-3 text-sm"><Mail className="w-4 h-4 text-gold" /><span>{client.email}</span></div>}
-            {client.telefone && <div className="flex items-center gap-3 text-sm"><Phone className="w-4 h-4 text-gold" /><span>{client.telefone}</span></div>}
-            {client.profissao && <div className="flex items-center gap-3 text-sm"><Briefcase className="w-4 h-4 text-gold" /><span>{client.profissao}</span></div>}
-            {client.objetivo && <div className="flex items-center gap-3 text-sm"><Target className="w-4 h-4 text-gold" /><span>{client.objetivo}</span></div>}
-            {client.estilo_predominante && <div className="flex items-center gap-3 text-sm"><Star className="w-4 h-4 text-gold" /><span>{client.estilo_predominante}{client.estilo_secundario ? ` / ${client.estilo_secundario}` : ""}</span></div>}
-            {client.paleta && <div className="flex items-center gap-3 text-sm"><Palette className="w-4 h-4 text-gold" /><span>{client.paleta}</span></div>}
+            {client.phone && <div className="flex items-center gap-3 text-sm"><Phone className="w-4 h-4 text-gold" /><span>{client.phone}</span></div>}
+            {client.profession && <div className="flex items-center gap-3 text-sm"><Briefcase className="w-4 h-4 text-gold" /><span>{client.profession}</span></div>}
+            {client.objective && <div className="flex items-center gap-3 text-sm"><Target className="w-4 h-4 text-gold" /><span>{client.objective}</span></div>}
           </div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="card-luxury p-6">
           <h2 className="font-display text-xl mb-4">Anotações da Estrategista</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">{client.anotacoes || "Sem anotações."}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">Sem anotações.</p>
         </motion.div>
       </div>
     </div>

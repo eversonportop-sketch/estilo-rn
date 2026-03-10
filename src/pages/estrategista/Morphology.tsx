@@ -78,7 +78,7 @@ export default function Morphology() {
               </SelectTrigger>
               <SelectContent>
                 {(clients || []).map((client) => (
-                  <SelectItem key={client.id} value={client.id}>{client.nome}</SelectItem>
+                  <SelectItem key={client.id} value={client.id}>{client.name}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
