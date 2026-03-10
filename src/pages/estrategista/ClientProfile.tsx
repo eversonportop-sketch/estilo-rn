@@ -50,7 +50,7 @@ export default function ClientProfile() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="card-luxury p-6">
           <h2 className="font-display text-xl mb-4">Anotações da Estrategista</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">{client.anotacoes || "Sem anotações."}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">Sem anotações.</p>
         </motion.div>
       </div>
     </div>

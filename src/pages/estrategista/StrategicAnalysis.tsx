@@ -74,7 +74,7 @@ export default function StrategicAnalysis() {
             <Select value={selectedClient} onValueChange={setSelectedClient}>
               <SelectTrigger className="w-full md:w-64"><SelectValue placeholder="Escolha uma cliente" /></SelectTrigger>
               <SelectContent>
-                {(clients || []).map((c) => <SelectItem key={c.id} value={c.id}>{c.nome}</SelectItem>)}
+                {(clients || []).map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
               </SelectContent>
             </Select>
           )}
