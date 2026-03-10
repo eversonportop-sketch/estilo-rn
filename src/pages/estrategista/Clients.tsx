@@ -1,16 +1,26 @@
 import { motion } from "framer-motion";
-import { Search, Plus, Eye, Edit, Trash2, Loader2 } from "lucide-react";
+import { Search, Plus, Eye, Edit, Trash2, Loader2, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useClients, useDeleteClient } from "@/hooks/useClients";
+import { useClients, useCreateClient, useUpdateClient, useDeleteClient } from "@/hooks/useClients";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const statusFilters = ["Todos", "Ativo", "Concluído"];
+
+const emptyForm = { nome: "", email: "", telefone: "", profissao: "", objetivo: "", status: "ativo" };
 
 export default function ClientsPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("Todos");
+  const [showModal, setShowModal] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [form, setForm] = useState(emptyForm);
+
   const { data: clients, isLoading } = useClients();
+  const createClient = useCreateClient();
+  const updateClient = useUpdateClient();
   const deleteClient = useDeleteClient();
 
   const filtered = (clients || []).filter((c) => {
@@ -19,12 +29,52 @@ export default function ClientsPage() {
     return matchSearch && matchStatus;
   });
 
+  const openNew = () => {
+    setEditingId(null);
+    setForm(emptyForm);
+    setShowModal(true);
+  };
+
+  const openEdit = (client: any) => {
+    setEditingId(client.id);
+    setForm({
+      nome: client.nome || "",
+      email: client.email || "",
+      telefone: client.telefone || "",
+      profissao: client.profissao || "",
+      objetivo: client.objetivo || "",
+      status: client.status || "ativo",
+    });
+    setShowModal(true);
+  };
+
+  const handleSave = () => {
+    if (!form.nome || !form.email) {
+      toast.error("Nome e email são obrigatórios.");
+      return;
+    }
+    if (editingId) {
+      updateClient.mutate({ id: editingId, ...form }, {
+        onSuccess: () => { toast.success("Cliente atualizada!"); setShowModal(false); },
+        onError: (e) => toast.error("Erro: " + e.message),
+      });
+    } else {
+      createClient.mutate(form, {
+        onSuccess: () => { toast.success("Cliente criada!"); setShowModal(false); },
+        onError: (e) => toast.error("Erro: " + e.message),
+      });
+    }
+  };
+
   const handleDelete = (id: string) => {
+    if (!confirm("Tem certeza que deseja excluir esta cliente?")) return;
     deleteClient.mutate(id, {
       onSuccess: () => toast.success("Cliente excluída!"),
       onError: (e) => toast.error("Erro: " + e.message),
     });
   };
+
+  const isSaving = createClient.isPending || updateClient.isPending;
 
   return (
     <div className="p-8 lg:p-12 max-w-7xl">
@@ -33,7 +83,7 @@ export default function ClientsPage() {
           <h1 className="text-4xl font-display font-light mb-1">Clientes</h1>
           <p className="text-muted-foreground text-sm">Gerencie suas clientes e consultorias</p>
         </div>
-        <button className="flex items-center gap-2 px-5 py-2.5 rounded-lg gold-gradient text-primary-foreground text-sm hover:opacity-90 transition-opacity">
+        <button onClick={openNew} className="flex items-center gap-2 px-5 py-2.5 rounded-lg gold-gradient text-primary-foreground text-sm hover:opacity-90 transition-opacity">
           <Plus className="w-4 h-4" />
           Nova Cliente
         </button>
@@ -59,6 +109,10 @@ export default function ClientsPage() {
         <div className="flex items-center justify-center py-20 gap-2 text-muted-foreground">
           <Loader2 className="w-5 h-5 animate-spin" /> Carregando clientes...
         </div>
+      ) : filtered.length === 0 ? (
+        <div className="text-center py-20 text-muted-foreground">
+          <p>Nenhuma cliente encontrada.</p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((client, i) => (
@@ -73,6 +127,7 @@ export default function ClientsPage() {
                 </span>
               </div>
               <div className="text-sm space-y-1 mb-4">
+                {client.profissao && <p><span className="text-muted-foreground">Profissão:</span> {client.profissao}</p>}
                 {client.estilo_predominante && <p><span className="text-muted-foreground">Estilo:</span> {client.estilo_predominante}</p>}
                 {client.paleta && <p><span className="text-muted-foreground">Paleta:</span> {client.paleta}</p>}
               </div>
@@ -91,7 +146,7 @@ export default function ClientsPage() {
                 <Link to={`/estrategista/clientes/${client.id}`} className="flex items-center gap-1 text-xs px-3 py-2 rounded-lg border border-border hover:border-gold/40 transition-colors">
                   <Eye className="w-3 h-3" /> Ver
                 </Link>
-                <button className="flex items-center gap-1 text-xs px-3 py-2 rounded-lg border border-border hover:border-gold/40 transition-colors">
+                <button onClick={() => openEdit(client)} className="flex items-center gap-1 text-xs px-3 py-2 rounded-lg border border-border hover:border-gold/40 transition-colors">
                   <Edit className="w-3 h-3" /> Editar
                 </button>
                 <button onClick={() => handleDelete(client.id)} className="flex items-center gap-1 text-xs px-3 py-2 rounded-lg border border-border hover:border-destructive/40 text-destructive/70 hover:text-destructive transition-colors">
@@ -100,6 +155,47 @@ export default function ClientsPage() {
               </div>
             </motion.div>
           ))}
+        </div>
+      )}
+
+      {/* Modal Nova/Editar Cliente */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-card border border-border rounded-xl shadow-xl w-full max-w-md mx-4 p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-display">{editingId ? "Editar Cliente" : "Nova Cliente"}</h2>
+              <button onClick={() => setShowModal(false)} className="text-muted-foreground hover:text-foreground"><X className="w-5 h-5" /></button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <Label>Nome *</Label>
+                <Input value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} placeholder="Nome completo" />
+              </div>
+              <div>
+                <Label>Email *</Label>
+                <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="email@exemplo.com" />
+              </div>
+              <div>
+                <Label>Telefone</Label>
+                <Input value={form.telefone} onChange={(e) => setForm({ ...form, telefone: e.target.value })} placeholder="(00) 00000-0000" />
+              </div>
+              <div>
+                <Label>Profissão</Label>
+                <Input value={form.profissao} onChange={(e) => setForm({ ...form, profissao: e.target.value })} placeholder="Profissão" />
+              </div>
+              <div>
+                <Label>Objetivo</Label>
+                <Input value={form.objetivo} onChange={(e) => setForm({ ...form, objetivo: e.target.value })} placeholder="Objetivo da consultoria" />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6 justify-end">
+              <button onClick={() => setShowModal(false)} className="px-4 py-2 text-sm rounded-lg border border-border hover:bg-muted transition-colors">Cancelar</button>
+              <button onClick={handleSave} disabled={isSaving} className="flex items-center gap-2 px-5 py-2 text-sm rounded-lg gold-gradient text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50">
+                {isSaving && <Loader2 className="w-4 h-4 animate-spin" />}
+                {editingId ? "Salvar" : "Criar"}
+              </button>
+            </div>
+          </motion.div>
         </div>
       )}
     </div>
