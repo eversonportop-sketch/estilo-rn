@@ -9,7 +9,6 @@ import rnLogo from "@/assets/rn-logo.png";
 
 const menuItems = [
   { title: "Início", url: "/cliente", icon: Home },
-  { title: "Minha Anamnese", url: "/cliente/anamnese", icon: ClipboardList },
   { title: "Minha Análise Estratégica de Imagem", url: "/cliente/analise", icon: FileText },
   { title: "Minha Identidade de Estilo", url: "/cliente/identidade-estilo", icon: User },
   { title: "Minha Coloração Pessoal", url: "/cliente/coloracao", icon: Palette },
