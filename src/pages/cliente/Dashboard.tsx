@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { Palette, Star, Target, Eye, Sparkles, CheckCircle2, Circle, ClipboardList, FileText, User, Scan, Shapes, Image } from "lucide-react";
+import { Palette, Star, Target, Eye, Sparkles, CheckCircle2, Circle, ClipboardList, FileText, User, Scan, Shapes, Image, Loader2 } from "lucide-react";
 import { useWardrobeContext } from "@/contexts/WardrobeContext";
 import EmptyState from "@/components/EmptyState";
 import { Link } from "react-router-dom";
+import { useClientJourney } from "@/hooks/useClientJourney";
 
 const journeySteps = [
   { label: "Anamnese", icon: ClipboardList, url: "/cliente/anamnese" },
