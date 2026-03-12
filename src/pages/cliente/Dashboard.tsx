@@ -17,7 +17,12 @@ const journeySteps = [
 
 export default function ClientDashboard() {
   const { looks, getPecaById } = useWardrobeContext();
+  const { data: journey, isLoading: journeyLoading } = useClientJourney();
   const looksRecomendados = looks.filter((l) => l.criadoPor === "estrategista");
+
+  const journeyStepKeys = ["anamnese", "analise", "morfologia", "identidade", "coloracao", "elementos", "looks"];
+  const getStepCompleted = (key: string) => journey?.steps?.find(s => s.key === key)?.completed ?? false;
+  const completedCount = journeyStepKeys.filter(getStepCompleted).length;
 
   return (
     <div className="p-8 lg:p-12 max-w-6xl">
