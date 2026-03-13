@@ -43,7 +43,12 @@ export default function ClientProfile() {
 
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-4xl font-display font-light mb-1">{client.name}</h1>
-        <p className="text-muted-foreground text-sm mb-10">Ficha completa da cliente</p>
+        <div className="flex items-center gap-4 mb-10">
+          <p className="text-muted-foreground text-sm">Ficha completa da cliente</p>
+          <button onClick={handleViewAsClient} className="inline-flex items-center gap-1.5 text-xs text-gold hover:text-gold/80 transition-colors">
+            <Eye className="w-3.5 h-3.5" /> Ver como cliente
+          </button>
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
