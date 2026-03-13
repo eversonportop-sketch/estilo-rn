@@ -2,10 +2,19 @@ import { motion } from "framer-motion";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Mail, Phone, Briefcase, Target, Loader2, Eye } from "lucide-react";
 import { useClient } from "@/hooks/useClients";
+import { setActiveClientId } from "@/hooks/useActiveClient";
 
 export default function ClientProfile() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { data: client, isLoading } = useClient(id);
+
+  const handleViewAsClient = () => {
+    if (id) {
+      setActiveClientId(id);
+      navigate("/cliente");
+    }
+  };
 
   if (isLoading) {
     return (
