@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Mail, Phone, Briefcase, Target, Loader2 } from "lucide-react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Mail, Phone, Briefcase, Target, Loader2, Eye } from "lucide-react";
 import { useClient } from "@/hooks/useClients";
 
 export default function ClientProfile() {
