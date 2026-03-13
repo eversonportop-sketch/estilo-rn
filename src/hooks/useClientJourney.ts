@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { getActiveClientId } from './useActiveClient';
 
 export interface JourneyStep {
   key: string;
@@ -7,22 +8,16 @@ export interface JourneyStep {
 }
 
 /**
- * Fetches the first client from the database (demo mode)
+ * Reads the active client_id from sessionStorage
  * and checks real Supabase data for each consulting journey step.
  */
 export function useClientJourney() {
-  return useQuery({
-    queryKey: ['client_journey_progress'],
-    queryFn: async () => {
-      // Get the first client as demo client
-      const { data: clients, error: clientErr } = await supabase
-        .from('clients')
-        .select('id')
-        .limit(1)
-        .order('created_at', { ascending: true });
+  const clientId = getActiveClientId();
 
-      if (clientErr) throw clientErr;
-      const clientId = clients?.[0]?.id;
+  return useQuery({
+    queryKey: ['client_journey_progress', clientId],
+    enabled: !!clientId,
+    queryFn: async () => {
       if (!clientId) return { clientId: null, steps: getDefaultSteps() };
 
       // Check all journey steps in parallel
