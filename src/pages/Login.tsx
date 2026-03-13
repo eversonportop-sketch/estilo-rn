@@ -1,9 +1,26 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import rnLogo from "@/assets/rn-logo.png";
+import { supabase } from "@/integrations/supabase/client";
+import { setActiveClientId } from "@/hooks/useActiveClient";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+
+  const handleClientAccess = async () => {
+    const { data: clients, error } = await supabase
+      .from('clients')
+      .select('id')
+      .limit(1)
+      .order('created_at', { ascending: true });
+    if (error || !clients?.length) {
+      toast.error("Nenhuma cliente encontrada no sistema.");
+      return;
+    }
+    setActiveClientId(clients[0].id);
+    navigate("/cliente");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-foreground relative overflow-hidden px-4">
