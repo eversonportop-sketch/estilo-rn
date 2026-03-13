@@ -74,7 +74,7 @@ export default function LoginPage() {
               Área da Estrategista
             </button>
             <button
-              onClick={() => navigate("/cliente")}
+              onClick={handleClientAccess}
               className="px-4 py-3 rounded-xl border border-gold/30 text-gold text-sm font-medium hover:bg-gold/5 transition-colors"
             >
               Área da Cliente
